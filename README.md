@@ -11,6 +11,7 @@ Un lugar donde guardaré mis pequeños scripts para hacer cosas...
 
 - [Incidentes](#incidents)
 - [Demanda](#demandita)
+- [Radar](#radar)
 - [References](#references)
 - [Contributing](#contribuciones)
 - [Author](#author)
@@ -40,9 +41,18 @@ Datos provistos amablemente por [CTM Salto Grande](https://saltogrande.org/)
 | '3792' |  '2024-11-01 23:22:05' |  '888 MW' |  '30.255 MWh' |  '4.214 m3/s' |  '0 m3/s' |  '14' |  '14' |  '1.890 MW' |  '34 | 56 m' |  '8 | 09 m' |  '25 | 01 ÂºC' |  '66 MW' |  '68 MW' |  '394 MW' |  '82 MW' |  '58 MW' |  '122 MW' |  '318 MW' |  '69 MW' |  '192 MW' |  '-520 MW' |
 
 
+## Radar
+
+Script para obtener las últimas 12 imágenes del Radar INTA localizado en Paraná, Entre ríos provisto por el [SMN](https://www.smn.gob.ar/radar). La _salida_ es un video en MP4 en resolución 804x802 a 2 FPS, resumiendo la última hora y 20 minutos de actividad.
+
+Las imágenes están disponibles cada 10 minutos, pero como el segundo es variable, el script se encarga de "encontrar" la imagen (recorre desde 1Z hasta 10Z)
+
+![image](https://github.com/user-attachments/assets/f85f1031-0d99-43e4-b37d-16e9b51f9f04)
+
 
 ## References
 
+- [Servicio Meteorológico Nacional](https://www.smn.gob.ar/radar)
 - [MariaDB MySQL](https://mariadb.org/)
 - [MySQL Connector](https://www.mysql.com/products/connector/)
 - [Requests](https://requests.readthedocs.io/en/latest/)
