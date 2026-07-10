@@ -11,6 +11,11 @@ Un lugar donde guardaré mis pequeños scripts para hacer cosas...
 
 - [Incidentes](#incidents)
 - [Demanda](#demandita)
+- [Generación por Región](#generación-por-región)
+- [Programación Diaria RSF](#programación-diaria-rsf)
+- [Cortes ENRE](#cortes-enre)
+- [Observaciones SMN](#observaciones-smn)
+- [UVA](#uva)
 - [Radar](#radar)
 - [References](#references)
 - [Contributing](#contribuciones)
@@ -40,6 +45,24 @@ Datos provistos amablemente por [CTM Salto Grande](https://saltogrande.org/)
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 | '3792' |  '2024-11-01 23:22:05' |  '888 MW' |  '30.255 MWh' |  '4.214 m3/s' |  '0 m3/s' |  '14' |  '14' |  '1.890 MW' |  '34 | 56 m' |  '8 | 09 m' |  '25 | 01 ÂºC' |  '66 MW' |  '68 MW' |  '394 MW' |  '82 MW' |  '58 MW' |  '122 MW' |  '318 MW' |  '69 MW' |  '192 MW' |  '-520 MW' |
 
+## Generación por Región
+
+Extrae la generación de energía actual desglosada por tipo (térmica, hidráulica, nuclear, renovable e importación) para una región eléctrica específica. Realiza un swap atómico en la base de datos MySQL mediante tablas temporales para asegurar la disponibilidad. Datos provistos amablemente por [CAMMESA](https://cammesaweb.cammesa.com/).
+| fecha | sumTotal | hidraulico | termico | nuclear | renovable | importacion |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| '2026-07-10 12:00:00' | 14500.2 | 3200.5 | 8500.1 | 1000.0 | 1200.3 | 599.3 |
+
+## Programación Diaria RSF
+
+Busca, selecciona la versión más reciente y descarga de forma automática los documentos adjuntos en formato ZIP de la Programación Diaria de CAMMESA. Se encarga de parsear dinámicamente el archivo plano `RF_GENERADORES.csv` (detectando codificación y delimitadores), filtra los registros de tipo **RSF** e inyecta masivamente las curvas horarias (H01 a H24) asociándolas a su respectiva central eléctrica en MySQL. Datos provistos amablemente por [CAMMESA](https://cammesaweb.cammesa.com/).
+
+## Cortes ENRE
+
+Scrapea en tiempo real los datos estructurados incrustados en los mapas del ENRE para consolidar el estado de cortes de suministro eléctrico de Edenor y Edesur. Genera de manera local un reporte en formato CSV (`cortes_enre.csv`) e impacta de manera optimizada los resúmenes y coordenadas geográficas de los detalles de baja, media y alta tensión en una base de datos MySQL. Datos provistos amablemente por el [ENRE](https://www.enre.gov.ar/).
+
+## Observaciones SMN
+
+Descarga diariamente los partes meteorológicos oficiales. Realiza el parseo regionalizado de las variables climáticas (temperatura, sensación térmica, humedad, presión y estado nuboso) para las diferentes ciudades argentinas y las almacena de forma segura en MySQL utilizando rotación de tablas temporales. Datos provistos amablemente por el [SMN](https://www.smn.gob.ar/).
 
 ## UVA
 
@@ -53,7 +76,9 @@ Las imágenes están disponibles cada 10 minutos, pero como el segundo es variab
 
 ![image](https://github.com/user-attachments/assets/f85f1031-0d99-43e4-b37d-16e9b51f9f04)
 
+## Estado del Subte
 
+Establece una conexión persistente a través del protocolo SignalR (Server-Sent Events) con los servidores de Metrovías/Emova para capturar flujos en streaming sobre el estado de la red de subtes de Buenos Aires. El script intercepta las cargas útiles, parsea los árboles HTML con BeautifulSoup y actualiza la base de datos MySQL **únicamente cuando se detectan variaciones reales** en el servicio de las líneas (A, B, C, D, E, H, Premetro).
 
 ## References
 
@@ -61,10 +86,12 @@ Las imágenes están disponibles cada 10 minutos, pero como el segundo es variab
 - [MariaDB MySQL](https://mariadb.org/)
 - [MySQL Connector](https://www.mysql.com/products/connector/)
 - [Requests](https://requests.readthedocs.io/en/latest/)
-- [Beatiful Soup](https://beautiful-soup-4.readthedocs.io/en/latest/)
+- [Curl CFFI (Advanced HTTP)](https://curl-cffi.readthedocs.io/)
+- [Beautiful Soup 4](https://beautiful-soup-4.readthedocs.io/en/latest/)
 - [MatPlotLib](https://matplotlib.org/)
 - [NumPy](https://numpy.org/)
 - [Pandas](https://pandas.pydata.org/)
+- [Python Dotenv](https://github.com/theofidry/pip-dotenv)
 
 ## Contribuciones
 
@@ -79,6 +106,7 @@ Asegúrese de actualizar las pruebas según corresponda.
 ## Gratitudes
 - **Comision técnica Mixta de Salto Grande** - _Por Proveer los datos abiertamente_ - [CTM Salto Grande](https://saltogrande.org/)
 - **Compañía Administradora del Mercado Mayorista Eléctrico S.A.** - _Por Proveer los datos abiertamente_ - [CAMMESA](https://cammesaweb.cammesa.com/)
+- **Ente Nacional Regulador de la Electricidad** - _Por Proveer el estado de la red_ - [ENRE](https://www.enre.gov.ar/)
 - **Juan Gonzalez** & **Eze Fernandez** - _Porque siempre los molesto con alguna pregunta_ - [Juan Gonzalez](https://github.com/juanchixd) - [Eze Fernandez](https://github.com/ezefernandez93)
 
 
@@ -87,5 +115,4 @@ Asegúrese de actualizar las pruebas según corresponda.
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ```python
-# Juanstdio's Microservices - Developed by Juan Blanc with the helf of Juan Gonzalez and Eze Fernandez - © 2024/2025
-```
+# Juanstdio's Microservices - Developed by Juan Blanc with the help of Juan Gonzalez and Eze Fernandez - © 2024/2026
