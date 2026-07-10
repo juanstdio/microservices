@@ -1,5 +1,8 @@
 # microservices
 Un lugar donde guardaré mis pequeños scripts para hacer cosas...
+Si llegaste acá, estarás leyendo parte del _backend_ del proyecto "Monitoreo eléctrico Argentino". 
+**Esto no es código de producción**. Todas las cosas que están acá las hice por _amor al arte_, no hay ninguna finalidad comercial.
+Si queres saber mas sobre el backend y/o historia del proyecto, [mandá un correo](mailto:juan@blanc.com.ar)
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![Status](https://img.shields.io/badge/Status-stable-green)
